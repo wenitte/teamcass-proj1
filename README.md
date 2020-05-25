@@ -1,5 +1,16 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## To Run project
+Use two terminal windows. One for the frontend server, and another for the backend. On the first terminal, start the frontend:
+
+$ yarn start
+This will take a few seconds and then a browser window will open with the example application from React loaded from http://localhost:3000:
+
+When you have the frontend running, switch to your second terminal and start the Flask backend at http://localhost:5000:
+
+$ yarn start-api
+Now both the frontend and backend are running.
+
 ## Available Scripts
 
 In the project directory, you can run:
