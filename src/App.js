@@ -8,9 +8,10 @@ import {
 // Import global styles
 import './App.css';
 // Impoort the page components
-import Landing from './Landing';
+import Landing from './components/landing/Landing';
 import Dashboard from './components/dashboard/Dashboard';
-
+import ChooseSong from './components/chooseSong/ChooseSong';
+import UploadMidi from './components/uploadMidi/UploadMidi';
 
 function App() {
   return (
@@ -30,6 +31,12 @@ function App() {
             </Route>
             <Route path="/dashboard">
               <Dashboard />
+            </Route>
+            <Route path="/choose-song">
+              <ChooseSong />
+            </Route>
+            <Route path="/upload-midi">
+              <UploadMidi />
             </Route>
           </Switch>
         </div>
