@@ -78,6 +78,7 @@ function Recordings(props) {
     return (
         <List>
             {recordingList}
+            <Button variant="contained" color="primary">New Recording</Button>
         </List>
     )
 }
