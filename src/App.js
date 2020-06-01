@@ -12,6 +12,7 @@ import Landing from './components/landing/Landing';
 import Dashboard from './components/dashboard/Dashboard';
 import ChooseSong from './components/chooseSong/ChooseSong';
 import UploadMidi from './components/uploadMidi/UploadMidi';
+import RecordSong from './components/recordSong/RecordSong';
 
 function App() {
   return (
@@ -37,6 +38,9 @@ function App() {
             </Route>
             <Route path="/upload-midi">
               <UploadMidi />
+            </Route>
+            <Route path="/record-song">
+              <RecordSong />
             </Route>
           </Switch>
         </div>
