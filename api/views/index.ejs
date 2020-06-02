@@ -1,0 +1,21 @@
+<h1>Title!</h1>
+<form method="post" action="/upload" enctype="multipart/form-data">
+  <label for="title">Title</label>
+  <input type="text" name="title">
+  <label for="part">Part</label>
+  <input type="text" name="part">
+  <label for="recording">Recording</label>
+  <input type="file" name="recording">
+  <button type="submit">Upload</button>
+</form>
+
+<!-- extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  form(method='POST' action='/upload/testSong/testpart')
+  div.form-group
+            label(for='pw2') Confirm Password:
+            input.form-control(type='file' name='recording')
+            button.btn.btn-primary(type='submit') Upload -->
