@@ -9,10 +9,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-<<<<<<< HEAD
     "firebase": "^7.14.6",
-=======
->>>>>>> d263956b672eb75dcc01db173cd2d0c85ae63ba2
     "material-ui-audio-player": "^1.1.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
