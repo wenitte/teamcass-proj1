@@ -4,7 +4,6 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 
@@ -32,7 +31,7 @@ export default function UploadMidi() {
             <div className={classes.paper}>
                 <Typography variant="h1">Upload Midi File</Typography>
                 <FormControl className={classes.formControl}>
-                    <TextField id="title" label="Outlined" variant="outlined" fullWidth label="Title" />
+                    <TextField id="title" variant="outlined" fullWidth label="Title" />
                 </FormControl>
                 <Button>Upload</Button>
             </div>

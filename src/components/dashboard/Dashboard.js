@@ -107,9 +107,9 @@ export default function Dashboard() {
                             <Grid item sm={6} style={{ paddingTop: theme.spacing(15) }}>
                                 <Typography variant="h2">Hello, adamhannadev!</Typography>
                                 <form className={classes.form} noValidate autoComplete="off">
-                                    <TextField id="name" label="Outlined" variant="outlined" fullWidth label="User Name" />
-                                    <TextField id="email" label="Outlined" variant="outlined" fullWidth label="Email" />
-                                    <TextField id="phone" label="Outlined" variant="outlined" fullWidth label="Password" />
+                                    <TextField id="name" variant="outlined" fullWidth label="User Name" />
+                                    <TextField id="email" variant="outlined" fullWidth label="Email" />
+                                    <TextField id="phone" variant="outlined" fullWidth label="Password" />
                                     <Button variant="contained" color="primary">
                                         Update
                                 </Button>
