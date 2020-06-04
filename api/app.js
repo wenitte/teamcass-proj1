@@ -7,7 +7,6 @@ const cors = require('cors');
 const fileUpload = require('express-fileupload');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var mixRouter = require('./routes/mix');
 
 var app = express();
@@ -31,7 +30,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors())
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/mix', mixRouter);
 
 app.post('/upload', async (req, res) => {
