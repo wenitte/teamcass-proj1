@@ -1,22 +1,31 @@
 // Import react and utilities
-import React from 'react';
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Redirect,
 } from "react-router-dom";
-// Import global styles
-import './App.css';
-// Impoort the page components
-import Landing from './components/landing/Landing';
-import Dashboard from './components/dashboard/Dashboard';
-import ChooseSong from './components/chooseSong/ChooseSong';
-import UploadMidi from './components/uploadMidi/UploadMidi';
-import RecordSong from './components/recordSong/RecordSong';
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 
-function App() {
+// Import global styles
+import "./App.css";
+// Impoort the page components
+import Landing from "./components/landing/Landing";
+import Dashboard from "./components/dashboard/Dashboard";
+import ChooseSong from "./components/chooseSong/ChooseSong";
+import UploadMidi from "./components/uploadMidi/UploadMidi";
+import RecordSong from "./components/recordSong/RecordSong";
+import { checkUserSession } from "./redux/user/user.actions";
+import { selectCurrentUser } from "./redux/user/user.selector";
+
+function App({ currentUser, checkUserSession }) {
+  useEffect(() => {
+    checkUserSession();
+  }, [checkUserSession]);
   return (
-    <div className="App" >
+    <div className="App">
       <Router>
         <div>
           {/*
@@ -27,21 +36,35 @@ function App() {
           of them to render at a time
         */}
           <Switch>
-            <Route exact path="/">
-              <Landing />
-            </Route>
-            <Route path="/dashboard">
-              <Dashboard />
-            </Route>
-            <Route path="/choose-song">
-              <ChooseSong />
-            </Route>
-            <Route path="/upload-midi">
-              <UploadMidi />
-            </Route>
-            <Route path="/record-song">
-              <RecordSong />
-            </Route>
+            <Route
+              exact
+              path="/"
+              render={() =>
+                currentUser ? <Redirect to="/dashboard" /> : <Landing />
+              }
+            />
+            <Route
+              path="/dashboard"
+              render={() => (currentUser ? <Dashboard /> : <Redirect to="/" />)}
+            />
+            <Route
+              path="/choose-song"
+              render={() =>
+                currentUser ? <ChooseSong /> : <Redirect to="/" />
+              }
+            />
+            <Route
+              path="/upload-midi"
+              render={() =>
+                currentUser ? <UploadMidi /> : <Redirect to="/" />
+              }
+            />
+            <Route
+              path="/record-song"
+              render={() =>
+                currentUser ? <RecordSong /> : <Redirect to="/" />
+              }
+            />
           </Switch>
         </div>
       </Router>
@@ -49,4 +72,12 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  checkUserSession: () => dispatch(checkUserSession()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
