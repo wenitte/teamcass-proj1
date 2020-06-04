@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
+// var appRoot = require('app-root-path');
 
 var indexRouter = require('./routes/index');
 var mixRouter = require('./routes/mix');
@@ -31,6 +32,26 @@ app.use(cors())
 
 app.use('/', indexRouter);
 app.use('/mix', mixRouter);
+
+app.get('/midi-files', function (req, res) {
+  res.json({
+    midis: [
+      {
+        id: "uibhist_mo_ghraidh",
+        title: "Uibhist Mo Graidh",
+        route: "/midi/uibhist_mo_ghraidh.mp3"
+      }, {
+        id: "suas_leis",
+        title: "Suas Leis A' Ghaidhlig",
+        route: "/midi/suas_leis.mp3"
+      }, {
+        id: "chi_mi_na_morbhenna",
+        title: "Chi Mi Na Morbhenna",
+        route: "/midi/chi_mi_na_morbhenna.mp3"
+      }
+    ]
+  })
+});
 
 app.post('/upload', async (req, res) => {
   try {
