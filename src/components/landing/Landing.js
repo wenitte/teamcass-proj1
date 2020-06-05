@@ -155,7 +155,6 @@ const Landing = ({ googleSignInStart, guestSignInStart }) => {
             type="submit"
             fullWidth
             variant="contained"
-            color="#ffffff"
             className={classes.submit}
             onClick={() => guestSignInStart()}
           >

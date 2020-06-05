@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, withRouter } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles } from "@material-ui/core/styles";
@@ -8,6 +8,8 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+
+import { getAllSongs } from "../../utils/query";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -25,15 +27,30 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ChooseSong() {
+const ChooseSong = () => {
   const classes = useStyles();
-  const [song, setSong] = React.useState("");
+  const [song, setSong] = useState("");
+  const [state, setState] = useState({
+    loading: true,
+    data: null,
+  });
+
+  useEffect(() => {
+    const contests = async () => {
+      let { data } = await getAllSongs();
+      let { midis } = data;
+      setState((state) => ({ ...state, loading: false, data: midis }));
+    };
+    contests();
+  }, []);
+
+  const { loading, data } = state;
 
   const handleChange = event => {
     setSong(event.target.value);
   };
 
-  return (
+  return loading ? (<h1>Loading...</h1>) : (
     <Container>
       <CssBaseline />
       <div className={classes.paper}>
@@ -43,9 +60,11 @@ export default function ChooseSong() {
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
-            <MenuItem value={10}>Birlinn</MenuItem>
-            <MenuItem value={20}>Morag</MenuItem>
-            <MenuItem value={30}>Uibhist</MenuItem>
+            {data.map((song) => (
+              <MenuItem key={song.id} value={song.id}>
+                {song.title}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </div>
@@ -59,3 +78,5 @@ export default function ChooseSong() {
     </Container>
   );
 }
+
+export default withRouter(ChooseSong);
