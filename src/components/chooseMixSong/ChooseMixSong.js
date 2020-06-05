@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { withRouter } from "react-router-dom";
+
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles } from "@material-ui/core/styles";
@@ -8,28 +10,46 @@ import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
-const useStyles = makeStyles(theme => ({
+import ChooseMixParts from "../chooseMixParts/ChooseMixParts";
+
+import { getAllSongs } from "../../utils/query";
+
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   formControl: {
     margin: theme.spacing(8),
-    minWidth: 200
-  }
+    minWidth: 200,
+  },
 }));
 
-export default function ChooseMixSong() {
+const ChooseMixSong = ({ history }) => {
   const classes = useStyles();
-  const [song, setSong] = React.useState("");
+  const [song, setSong] = useState("");
+  const [state, setState] = useState({
+    loading: true,
+    data: null,
+  });
+  useEffect(() => {
+    const contests = async () => {
+      let { data } = await getAllSongs();
+      let { midis } = data;
+      setState((state) => ({ ...state, loading: false, data: midis }));
+    };
+    contests();
+  }, []);
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     setSong(event.target.value);
   };
-
-  return (
+  const { loading, data } = state;
+  return loading ? (
+    <h1>Loading...</h1>
+  ) : (
     <Container>
       <CssBaseline />
       <div className={classes.paper}>
@@ -39,16 +59,28 @@ export default function ChooseMixSong() {
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
-            <MenuItem value={10}>Birlinn</MenuItem>
-            <MenuItem value={20}>Morag</MenuItem>
-            <MenuItem value={30}>Uibhist</MenuItem>
+            {data.map((song) => (
+              <MenuItem key={song.id} value={song.id}>
+                {song.title}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </div>
-
-      <Button variant="contained" color="primary" size="large">
+      {song ? <ChooseMixParts /> : null}
+      {/* <Button
+        variant="contained"
+        color="primary"
+        size="large"
+        disabled={song ? false : true}
+        onClick={() => {
+          history.push("/choose-mix-parts");
+        }}
+      >
         Let's go
-      </Button>
+      </Button> */}
     </Container>
   );
-}
+};
+
+export default withRouter(ChooseMixSong);

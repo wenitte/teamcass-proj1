@@ -3,23 +3,27 @@ import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import { signOutStart } from "../../redux/user/user.actions";
-import './style.css'
+import "./style.css";
 
 const Navbar = ({ signOut, currentUser }) => {
   return (
-    <div class="navbar">
-    <Grid justify="space-between" container spacing={3}>
-      <Grid item>
-      <img src="../quartetlogo.png" height="80" alt="Quartet Logo" />  
-      </Grid>
-      {currentUser ? (
+    <div className="navbar">
+      <Grid justify="space-between" container spacing={3}>
         <Grid item>
-            <Button variant="contained" color="primary" onClick={() => signOut()}>
+          <img src="../quartetlogo.png" height="80" alt="Quartet Logo" />
+        </Grid>
+        {currentUser ? (
+          <Grid item>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => signOut()}
+            >
               Sign Out
             </Button>
-        </Grid>
-      ) : null}
-    </Grid>
+          </Grid>
+        ) : null}
+      </Grid>
     </div>
   );
 };
