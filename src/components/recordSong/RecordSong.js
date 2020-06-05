@@ -35,8 +35,10 @@ class RecordSong extends React.Component {
     super(props);
     this.state = {
       recording: false,
-      audios: []
+      audios: [],
+      part: ''
     };
+    this.updatePart = this.updatePart.bind(this);
   }
 
   async componentDidMount() {
@@ -93,23 +95,32 @@ class RecordSong extends React.Component {
     console.log(`Blob is: - ${audio}`);
     var formData = new FormData();
     formData.append("recording", audio);
-    formData.append("songID", "morag");
+    formData.append("songID", "uibhist_mo_ghraidh");
     formData.append("uid", "adam");
-    formData.append("partID", "alto");
+    formData.append("partID", this.state.part);
     axios.post("http://localhost:8000/upload", formData, {
       headers: {
         "Content-Type": "multipart/form-data"
       }
     });
+    // .then(() => {
+    //   this.props.history.push('/clip-saved');
+    // });
   }
   deleteAudio(audioURL) {
     // filter out current videoURL from the list of saved videos
     const audios = this.state.audios.filter(a => a !== audioURL);
     this.setState({ audios });
   }
+  updatePart(part) {
+    this.setState({ part });
+  }
+  updatePart(event) {
+    this.setState({ part: event.target.value });
+  }
 
   render() {
-    const { recording, audios } = this.state;
+    const { recording, audios, part } = this.state;
 
     return (
       <Container>
@@ -119,19 +130,20 @@ class RecordSong extends React.Component {
           <Grid item sm={6}>
             <Typography variant="h3">Choose Role</Typography>
             <FormControl>
-              <Select>
+              <Select value={part} onChange={this.updatePart}>
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                <MenuItem value="">Birlinn</MenuItem>
-                <MenuItem value="">Morag</MenuItem>
-                <MenuItem value="">Uibhist</MenuItem>
+                <MenuItem value="soprano">Soprano</MenuItem>
+                <MenuItem value="alto">Alto</MenuItem>
+                <MenuItem value="tenor">Tenor</MenuItem>
+                <MenuItem value="bass">Bass</MenuItem>
               </Select>
             </FormControl>
           </Grid>
 
           <Grid item sm={6}>
-            <Typography variant="h3">Recording component</Typography>
+            <Typography variant="h3">Record {part.charAt(0).toUpperCase() + part.slice(1)} Part</Typography>
             <div >
               <audio
                 style={{ width: 400 }}
@@ -143,13 +155,13 @@ class RecordSong extends React.Component {
               </audio>
               <div>
                 {!recording && (
-                  <Button onClick={e => this.startRecording(e)}>Record</Button>
+                  <Button variant="contained" color="primary" onClick={e => this.startRecording(e)}>Record</Button>
                 )}
                 {recording && (
-                  <Button onClick={e => this.stopRecording(e)}>Stop</Button>
+                  <Button variant="contained" color="primary" onClick={e => this.stopRecording(e)}>Stop</Button>
                 )}
               </div>
-              <Link to="/clip-saved">
+              {/* <Link to="/clip-saved">
                 <Button
                   style={{ marginTop: "2rem" }}
                   variant="contained"
@@ -157,17 +169,17 @@ class RecordSong extends React.Component {
                 >
                   Save
                 </Button>
-              </Link>
+              </Link> */}
               <div>
                 <h3>Recorded audios:</h3>
                 {audios.map((audio, i) => (
                   <div key={`audio_${i}`}>
                     <audio controls style={{ width: 200 }} src={audio.url} />
                     <div>
-                      <Button onClick={() => this.deleteAudio(audio)}>Delete</Button>
+                      <Button variant="contained" color="primary" onClick={() => this.deleteAudio(audio)}>Delete</Button>
                     </div>
                     <div>
-                      <Button onClick={() => this.uploadAudio(audio.blob)}>Upload</Button>
+                      <Button variant="contained" color="primary" style={{ marginTop: "2rem" }} onClick={() => this.uploadAudio(audio.blob)}>Upload</Button>
                     </div>
                   </div>
                 ))}
