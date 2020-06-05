@@ -61,7 +61,7 @@ function App({ currentUser, checkUserSession }) {
             />
             <Route
               path="/dashboard"
-              render={() => (currentUser ? <Dashboard /> : <Redirect to="/" />)}
+              render={() => (currentUser ? <Dashboard displayName={currentUser.displayName}/> : <Redirect to="/" />)}
             />
             <Route
               path="/choose-song"
