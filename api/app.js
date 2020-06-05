@@ -65,7 +65,7 @@ app.post('/upload', async (req, res) => {
       let recording = req.files.recording;
 
       //Use the mv() method to place the file in upload directory (i.e. "uploads")
-      recording.mv(`./public/audio/` + req.body.title + `/ ` + req.body.title + `-` + req.body.part + `.mp3`);
+      recording.mv(`./public/recordings/${req.body.songID}/${req.body.partID}/${req.body.uid}-${req.body.songID}-${req.body.partID}.mp3`);
 
       //send response
       res.send({
