@@ -9,37 +9,37 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginBottom: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 200
+    minWidth: 200,
   },
   paddingTopBottom: {
     marginTop: theme.spacing(8),
-    marginBottom: theme.spacing(8)
-  }
+    marginBottom: theme.spacing(8),
+  },
 }));
 
-export default function ChooseSong() {
+export default function ChooseMixParts() {
   const classes = useStyles();
   const [song, setSong] = React.useState("");
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     setSong(event.target.value);
   };
 
   return (
     <Container>
       <CssBaseline />
-      <div className={classes.paper}>
+      {/* <div className={classes.paper}>
         <Typography variant="h3">Song Title</Typography>
-      </div>
+      </div> */}
       <Grid container spacing={3} className={classes.paddingTopBottom}>
         <Grid item xs={3}>
           <Typography>Soprano</Typography>
