@@ -17,7 +17,7 @@ import Container from "@material-ui/core/Container";
 // Auth imports
 import {
   googleSignInStart,
-  emailSignInStart,
+  guestSignInStart,
 } from "../../redux/user/user.actions";
 
 function Copyright() {
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Landing = ({ googleSignInStart, emailSignInStart }) => {
+const Landing = ({ googleSignInStart, guestSignInStart }) => {
   const classes = useStyles();
 
   const [userCredentials, setCredentials] = useState({
@@ -68,11 +68,11 @@ const Landing = ({ googleSignInStart, emailSignInStart }) => {
     setCredentials({ ...userCredentials, [name]: value });
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
 
-    emailSignInStart(email, password);
-  };
+  //   emailSignInStart(email, password);
+  // };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -84,7 +84,7 @@ const Landing = ({ googleSignInStart, emailSignInStart }) => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+        {/* <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -136,7 +136,7 @@ const Landing = ({ googleSignInStart, emailSignInStart }) => {
               </Link>
             </Grid>
           </Grid>
-        </form>
+        </form> */}
         <Grid item>
           <Button
             type="submit"
@@ -149,6 +149,19 @@ const Landing = ({ googleSignInStart, emailSignInStart }) => {
             Sign In With Google
           </Button>
         </Grid>
+        <h2>OR</h2>
+        <Grid item>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="#ffffff"
+            className={classes.submit}
+            onClick={() => guestSignInStart()}
+          >
+            Guest
+          </Button>
+        </Grid>
       </div>
       <Box mt={8}>
         <Copyright />
@@ -158,8 +171,7 @@ const Landing = ({ googleSignInStart, emailSignInStart }) => {
 };
 const mapDispatchToProps = (dispatch) => ({
   googleSignInStart: () => dispatch(googleSignInStart()),
-  emailSignInStart: (email, password) =>
-    dispatch(emailSignInStart({ email, password })),
+  guestSignInStart: () => dispatch(guestSignInStart()),
 });
 
 export default connect(null, mapDispatchToProps)(Landing);

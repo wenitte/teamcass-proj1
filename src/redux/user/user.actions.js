@@ -9,6 +9,10 @@ export const emailSignInStart = (emailAndPassword) => ({
   payload: emailAndPassword,
 });
 
+export const guestSignInStart = () => ({
+  type: UserActionTypes.GUEST_SIGN_IN_START,
+});
+
 export const signInSuccess = (user) => ({
   type: UserActionTypes.SIGN_IN_SUCCESS,
   payload: user,

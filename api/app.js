@@ -11,6 +11,7 @@ const { exec } = require("child_process");
 
 var indexRouter = require('./routes/index');
 var mixRouter = require('./routes/mix');
+var getRecordingRouter = require('./routes/get-recording');
 
 var app = express();
 
@@ -34,6 +35,7 @@ app.use(cors())
 
 app.use('/', indexRouter);
 app.use('/mix', mixRouter);
+app.use('/get-recording', getRecordingRouter)
 
 app.get('/midi-files', function (req, res) {
   res.json({
