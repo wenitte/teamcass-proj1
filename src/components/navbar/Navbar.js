@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
@@ -10,7 +11,9 @@ const Navbar = ({ signOut, currentUser }) => {
     <div className="navbar">
       <Grid justify="space-between" container spacing={3}>
         <Grid item>
-          <img src="../quartetlogo.png" height="80" alt="Quartet Logo" />
+          <Link to="/dashboard">
+            <img src="../quartetlogo.png" height="80" alt="Quartet Logo" />
+          </Link>
         </Grid>
         {currentUser ? (
           <Grid item>
