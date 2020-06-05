@@ -15,6 +15,7 @@ const Navbar = ({ signOut, currentUser }) => {
         {currentUser ? (
           <Grid item>
             <Button
+              style={{marginTop: "25%"}}
               variant="contained"
               color="primary"
               onClick={() => signOut()}
