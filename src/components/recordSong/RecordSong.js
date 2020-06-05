@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
@@ -148,13 +149,15 @@ class RecordSong extends React.Component {
                   <button onClick={e => this.stopRecording(e)}>Stop</button>
                 )}
               </div>
-              <Button
-                style={{ marginTop: "2rem" }}
-                variant="contained"
-                color="primary"
-              >
-                Save
-              </Button>
+              <Link to="/clip-saved">
+                <Button
+                  style={{ marginTop: "2rem" }}
+                  variant="contained"
+                  color="primary"
+                >
+                  Save
+                </Button>
+              </Link>
               <div>
                 <h3>Recorded audios:</h3>
                 {audios.map((audioURL, i) => (
