@@ -101,7 +101,7 @@ export default function Dashboard(props) {
         <CssBaseline />
         <Container maxWidth="lg">
           <div className={classes.root}>
-            <Typography className={classes.heading} variant="h1">Hello, {props.user}</Typography>
+            <Typography className={classes.heading} variant="h3">Hello, {props.user}</Typography>
             <Grid container spacing={3}>
               <Grid container justify="center" spacing={5}>
                 <Grid item>
