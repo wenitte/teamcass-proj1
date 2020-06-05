@@ -52,7 +52,6 @@ export default function ChooseSong() {
             <MenuItem value={30}>Uibhist</MenuItem>
           </Select>
         </FormControl>
-        <ButtonGroup />
       </div>
       <div className={classes.buttonGroup}>
         <Typography variant="h6">Choose Role</Typography>
