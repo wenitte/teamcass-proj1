@@ -10,7 +10,7 @@ import { signOutStart } from "../../redux/user/user.actions";
 
 const Navbar = ({ signOut, currentUser }) => {
   return (
-    <Grid justify="space-between" container spacing={24}>
+    <Grid justify="space-between" container spacing={3}>
       <Grid item>
         <Box border={1} borderRadius="50%">
           <Typography variant="h4">Q</Typography>
@@ -19,7 +19,7 @@ const Navbar = ({ signOut, currentUser }) => {
       {currentUser ? (
         <Grid item>
           <div>
-            <Button raised color="accent" onClick={() => signOut()}>
+            <Button variant="contained" color="primary" onClick={() => signOut()}>
               Sign Out
             </Button>
           </div>
