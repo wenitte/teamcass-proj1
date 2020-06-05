@@ -39,7 +39,7 @@ function App({ currentUser, checkUserSession }) {
   ) : (
     <div className="App">
       <Router>
-        <Navbar />
+        <Navbar currentUser={currentUser} />
         <div>
           {/*
           A <Switch> looks through all its children <Route>
@@ -72,12 +72,7 @@ function App({ currentUser, checkUserSession }) {
                 currentUser ? <UploadMidi /> : <Redirect to="/" />
               }
             />
-            <Route
-              path="/record-song"
-              render={() =>
-                <RecordSong />
-              }
-            />
+            <Route path="/record-song" render={() => <RecordSong />} />
             <Route
               path="/choose-mix-song"
               render={() =>
