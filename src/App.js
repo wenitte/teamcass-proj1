@@ -37,68 +37,68 @@ function App({ currentUser, checkUserSession }) {
   return loading ? (
     <h1>Loading...</h1>
   ) : (
-    <div className="App">
-      <Router>
-        <Navbar />
-        <div>
-          {/*
+      <div className="App">
+        <Router>
+          <Navbar />
+          <div>
+            {/*
           A <Switch> looks through all its children <Route>
           elements and renders the first one whose path
           matches the current URL. Use a <Switch> any time
           you have multiple routes, but you want only one
           of them to render at a time
         */}
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={() =>
-                currentUser ? <Redirect to="/dashboard" /> : <Landing />
-              }
-            />
-            <Route
-              path="/dashboard"
-              render={() => (currentUser ? <Dashboard /> : <Redirect to="/" />)}
-            />
-            <Route
-              path="/choose-song"
-              render={() =>
-                currentUser ? <ChooseSong /> : <Redirect to="/" />
-              }
-            />
-            <Route
-              path="/upload-midi"
-              render={() =>
-                currentUser ? <UploadMidi /> : <Redirect to="/" />
-              }
-            />
-            <Route
-              path="/record-song"
-              render={() =>
-                <RecordSong />
-              }
-            />
-            <Route
-              path="/choose-mix-song"
-              render={() =>
-                currentUser ? <ChooseMixSong /> : <Redirect to="/" />
-              }
-            />
-            <Route
-              path="/choose-mix-parts"
-              render={() =>
-                currentUser ? <ChooseMixParts /> : <Redirect to="/" />
-              }
-            />
-            <Route
-              path="/mix-ready"
-              render={() => (currentUser ? <MixReady /> : <Redirect to="/" />)}
-            />
-          </Switch>
-        </div>
-      </Router>
-    </div>
-  );
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={() =>
+                  currentUser ? <Redirect to="/dashboard" /> : <Landing />
+                }
+              />
+              <Route
+                path="/dashboard"
+                render={() => (currentUser ? <Dashboard /> : <Redirect to="/" />)}
+              />
+              <Route
+                path="/choose-song"
+                render={() =>
+                  currentUser ? <ChooseSong /> : <Redirect to="/" />
+                }
+              />
+              <Route
+                path="/upload-midi"
+                render={() =>
+                  currentUser ? <UploadMidi /> : <Redirect to="/" />
+                }
+              />
+              <Route
+                path="/record-song"
+                render={() =>
+                  currentUser ? <RecordSong /> : <Redirect to="/" />
+                }
+              />
+              <Route
+                path="/choose-mix-song"
+                render={() =>
+                  currentUser ? <ChooseMixSong /> : <Redirect to="/" />
+                }
+              />
+              <Route
+                path="/choose-mix-parts"
+                render={() =>
+                  currentUser ? <ChooseMixParts /> : <Redirect to="/" />
+                }
+              />
+              <Route
+                path="/mix-ready"
+                render={() => (currentUser ? <MixReady /> : <Redirect to="/" />)}
+              />
+            </Switch>
+          </div>
+        </Router>
+      </div>
+    );
 }
 
 const mapStateToProps = createStructuredSelector({
