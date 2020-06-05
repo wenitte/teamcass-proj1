@@ -38,10 +38,10 @@ router.post('/', function (req, res, next) {
     let mixedFile = `${songID}-${currentTime}-mixed.mp3`;
     const mixCmd = exec(`
     set - e &&
-    cd public/recordings/tmp/ &&
+    cd ./public/recordings/tmp/ &&
     sox -m *.mp3 ${songID}-${currentTime}-mixed.mp3 &&
     mv  ${mixedFile} ../mixed/ &&
-    rm * &&
+    rm * && cd ../../../ &&
     echo ${songID} - mixed.mp3 has been created.
     `, (error, stdout, stderr) => {
         if (error) {

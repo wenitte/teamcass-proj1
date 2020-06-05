@@ -132,7 +132,7 @@ class RecordSong extends React.Component {
 
           <Grid item sm={6}>
             <Typography variant="h3">Recording component</Typography>
-            <div className="camera">
+            <div >
               <audio
                 style={{ width: 400 }}
                 ref={a => {
@@ -143,10 +143,10 @@ class RecordSong extends React.Component {
               </audio>
               <div>
                 {!recording && (
-                  <button onClick={e => this.startRecording(e)}>Record</button>
+                  <Button onClick={e => this.startRecording(e)}>Record</Button>
                 )}
                 {recording && (
-                  <button onClick={e => this.stopRecording(e)}>Stop</button>
+                  <Button onClick={e => this.stopRecording(e)}>Stop</Button>
                 )}
               </div>
               <Link to="/clip-saved">
@@ -160,18 +160,14 @@ class RecordSong extends React.Component {
               </Link>
               <div>
                 <h3>Recorded audios:</h3>
-                {audios.map((audioURL, i) => (
+                {audios.map((audio, i) => (
                   <div key={`audio_${i}`}>
-                    <audio controls style={{ width: 200 }} src={audioURL} />
+                    <audio controls style={{ width: 200 }} src={audio.url} />
                     <div>
-                      <button onClick={() => this.deleteAudio(audioURL)}>
-                        Delete
-                      </button>
+                      <Button onClick={() => this.deleteAudio(audio)}>Delete</Button>
                     </div>
                     <div>
-                      <button onClick={() => this.uploadAudio(audioURL)}>
-                        Upload
-                      </button>
+                      <Button onClick={() => this.uploadAudio(audio.blob)}>Upload</Button>
                     </div>
                   </div>
                 ))}
