@@ -1,17 +1,16 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
 const { exec } = require("child_process");
 
-var indexRouter = require('./routes/index');
-var mixRouter = require('./routes/mix');
-var getRecordingRouter = require('./routes/get-recording');
+let mixRouter = require('./routes/mix');
+let getRecordingRouter = require('./routes/get-recording');
 
-var app = express();
+let app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -63,9 +62,9 @@ app.post('/upload', async (req, res) => {
       recording.mv(`./public/recordings/${req.body.songID}/${req.body.partID}/${req.body.uid}-${req.body.songID}-${req.body.partID}.wav`);
       const mixCmd = exec(`
       set - e &&
-      cd /home/ubuntu/quartet/api/public/recordings/${req.body.songID}/${req.body.partID} &&
+      cd ./public/recordings/${req.body.songID}/${req.body.partID} &&
       sox "|opusdec --force-wav ${req.body.uid}-${req.body.songID}-${req.body.partID}.wav -" ${req.body.uid}-${req.body.songID}-${req.body.partID}.mp3 && rm ${req.body.uid}-${req.body.songID}-${req.body.partID}.wav &&
-      cd /home/ubuntu/quartet/api && pwd && echo File has been transcoded.
+      cd ../../../../ && pwd && echo File has been transcoded.
       `, (error, stdout, stderr) => {
         if (error) {
           console.log(`error: ${error.message}`);
