@@ -8,26 +8,23 @@ import Typography from "@material-ui/core/Typography";
 
 import { signOutStart } from "../../redux/user/user.actions";
 
-const Navbar = ({ signOut }) => {
+const Navbar = ({ signOut, currentUser }) => {
   return (
-    <Grid
-      justify="space-between" // Add it here
-      container
-      spacing={24}
-    >
+    <Grid justify="space-between" container spacing={24}>
       <Grid item>
         <Box border={1} borderRadius="50%">
           <Typography variant="h4">Q</Typography>
         </Box>
       </Grid>
-
-      <Grid item>
-        <div>
-          <Button raised color="accent" onClick={() => signOut()}>
-            Sign Out
-          </Button>
-        </div>
-      </Grid>
+      {currentUser ? (
+        <Grid item>
+          <div>
+            <Button raised color="accent" onClick={() => signOut()}>
+              Sign Out
+            </Button>
+          </div>
+        </Grid>
+      ) : null}
     </Grid>
   );
 };

@@ -29,6 +29,17 @@ const userReducer = (state = INITIAL_STATE, action) => {
         error: action.payload,
       };
 
+    case UserActionTypes.GUEST_SIGN_IN_START:
+      return {
+        ...state,
+        currentUser: {
+          email: "guest@guest.com",
+          id: "817xvzXncusfgYUFjfJFuyiFFgdCsfxy97aysd",
+          displayName: "Guest",
+        },
+        error: null,
+      };
+
     default:
       return state;
   }
