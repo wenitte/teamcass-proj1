@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles } from "@material-ui/core/styles";
@@ -24,9 +25,11 @@ export default function SavedClip() {
         <Typography variant="h3">Clip Saved!</Typography>
       </div>
       
-      <Button style={{marginTop: "2rem"}} variant="contained" color="primary" size="large">
-        Back to Dashboard
-      </Button>
+      <Link to="/dashboard">
+        <Button style={{marginTop: "2rem"}} variant="contained" color="primary" size="large">
+          Back to Dashboard
+        </Button>
+      </Link>
       
     </Container>
   );

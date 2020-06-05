@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles } from "@material-ui/core/styles";
@@ -49,9 +50,11 @@ export default function ChooseSong() {
         </FormControl>
       </div>
       
-      <Button variant="contained" color="primary" size="large">
-        Let's go
-      </Button>
+      <Link to="/record-song">
+        <Button variant="contained" color="primary" size="large">
+          Let's go
+        </Button>
+      </Link>
       
     </Container>
   );

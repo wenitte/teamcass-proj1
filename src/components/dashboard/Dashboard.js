@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
@@ -100,18 +101,22 @@ export default function Dashboard(props) {
         <CssBaseline />
         <Container maxWidth="lg">
           <div className={classes.root}>
-            <Typography className={classes.heading} variant="h1">Hello, {props.user}</Typography>
+            <Typography className={classes.heading} variant="h3">Hello, {props.user}</Typography>
             <Grid container spacing={3}>
               <Grid container justify="center" spacing={5}>
                 <Grid item>
-                  <Button variant="contained" color="primary" size="large">
-                    Mix!
-                  </Button>
+                  <Link to="/choose-mix-song">
+                    <Button variant="contained" color="primary" size="large">
+                      Mix!
+                    </Button>
+                  </Link>
                 </Grid>
                 <Grid item>
-                  <Button variant="contained" color="primary" size="large">
-                    Create!
-                  </Button>
+                  <Link to="/choose-song">
+                    <Button variant="contained" color="primary" size="large">
+                      Create!
+                    </Button>
+                  </Link>
                 </Grid>
               </Grid>
               <Grid item sm={6}>
