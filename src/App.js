@@ -17,6 +17,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import ChooseSong from "./components/chooseSong/ChooseSong";
 import UploadMidi from "./components/uploadMidi/UploadMidi";
 import RecordSong from "./components/recordSong/RecordSong";
+import LogoSignOut from "./components/logoSignOut/LogoSignOut";
 import { checkUserSession } from "./redux/user/user.actions";
 import { selectCurrentUser } from "./redux/user/user.selector";
 
@@ -35,6 +36,7 @@ function App({ currentUser, checkUserSession }) {
           you have multiple routes, but you want only one
           of them to render at a time
         */}
+        <LogoSignOut />
           <Switch>
             <Route
               exact
