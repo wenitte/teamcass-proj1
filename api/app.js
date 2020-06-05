@@ -5,9 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
-const ffmpeg = require('ffmpeg');
 const { exec } = require("child_process");
-// var appRoot = require('app-root-path');
 
 var indexRouter = require('./routes/index');
 var mixRouter = require('./routes/mix');
@@ -33,7 +31,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors())
 
-app.use('/', indexRouter);
 app.use('/mix', mixRouter);
 app.use('/get-recording', getRecordingRouter)
 
@@ -66,10 +63,9 @@ app.post('/upload', async (req, res) => {
       recording.mv(`./public/recordings/${req.body.songID}/${req.body.partID}/${req.body.uid}-${req.body.songID}-${req.body.partID}.wav`);
       const mixCmd = exec(`
       set - e &&
-      cd ./public/recordings/${req.body.songID}/${req.body.partID} &&
-      pwd && ls -a &&
-      sox "|opusdec --force-wav ${req.body.uid}-${req.body.songID}-${req.body.partID}.wav -" ${req.body.uid}-${req.body.songID}-${req.body.partID}.mp3 &&
-      echo File has been transcoded.
+      cd /home/ubuntu/quartet/api/public/recordings/${req.body.songID}/${req.body.partID} &&
+      sox "|opusdec --force-wav ${req.body.uid}-${req.body.songID}-${req.body.partID}.wav -" ${req.body.uid}-${req.body.songID}-${req.body.partID}.mp3 && rm ${req.body.uid}-${req.body.songID}-${req.body.partID}.wav &&
+      cd /home/ubuntu/quartet/api && pwd && echo File has been transcoded.
       `, (error, stdout, stderr) => {
         if (error) {
           console.log(`error: ${error.message}`);
@@ -85,9 +81,6 @@ app.post('/upload', async (req, res) => {
         console.log('Child process exited with exit code ' + code);
       });
 
-      // sox /public/recordings/${req.body.songID}/${req.body.partID}/${req.body.uid}-${req.body.songID}-${req.body.partID}.wav ./public/recordings/${req.body.songID}/${req.body.partID}/${req.body.uid}-${req.body.songID}-${req.body.partID}.mp3 &&
-
-      //send response
       res.send({
         status: true,
         message: 'File is uploaded',
