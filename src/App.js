@@ -1,17 +1,13 @@
 // Import react and utilities
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 
 // Import global styles
 import "./App.css";
@@ -24,35 +20,26 @@ import RecordSong from "./components/recordSong/RecordSong";
 import ChooseMixSong from "./components/chooseMixSong/ChooseMixSong";
 import ChooseMixParts from "./components/chooseMixParts/ChooseMixParts";
 import MixReady from "./components/mixReady/MixReady";
+import Navbar from "./components/navbar/Navbar";
+
 import { checkUserSession } from "./redux/user/user.actions";
 import { selectCurrentUser } from "./redux/user/user.selector";
 
 function App({ currentUser, checkUserSession }) {
+  const [state, setState] = useState({
+    loading: true,
+  });
   useEffect(() => {
     checkUserSession();
+    setState((state) => ({ ...state, loading: false }));
   }, [checkUserSession]);
-  return (
+  const { loading } = state;
+  return loading ? (
+    <h1>Loading...</h1>
+  ) : (
     <div className="App">
-      <Grid
-        justify="space-between" // Add it here :)
-        container
-        spacing={24}
-      >
-        <Grid item>
-          <Box border={1} borderRadius="50%">
-            <Typography variant="h4">Q</Typography>
-          </Box>
-        </Grid>
-
-        <Grid item>
-          <div>
-            <Button raised color="accent">
-              Sign Out
-            </Button>
-          </div>
-        </Grid>
-      </Grid>
       <Router>
+        <Navbar />
         <div>
           {/*
           A <Switch> looks through all its children <Route>
@@ -115,14 +102,11 @@ function App({ currentUser, checkUserSession }) {
 }
 
 const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser
+  currentUser: selectCurrentUser,
 });
 
-const mapDispatchToProps = dispatch => ({
-  checkUserSession: () => dispatch(checkUserSession())
+const mapDispatchToProps = (dispatch) => ({
+  checkUserSession: () => dispatch(checkUserSession()),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
