@@ -37,6 +37,7 @@ function App({ currentUser, checkUserSession }) {
   return loading ? (
     <h1>Loading...</h1>
   ) : (
+
     <div className="App">
       <Router>
         <Navbar currentUser={currentUser} />
@@ -48,6 +49,7 @@ function App({ currentUser, checkUserSession }) {
           you have multiple routes, but you want only one
           of them to render at a time
         */}
+
           <Switch>
             <Route
               exact
@@ -94,6 +96,7 @@ function App({ currentUser, checkUserSession }) {
       </Router>
     </div>
   );
+
 }
 
 const mapStateToProps = createStructuredSelector({

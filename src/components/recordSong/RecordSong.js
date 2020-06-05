@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import AudioPlayer from 'material-ui-audio-player';
-const audioType = 'audio/mp3';
+const audioType = 'audio/wav';
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -30,7 +30,7 @@ class RecordSong extends React.Component {
         super(props);
         this.state = {
             recording: false,
-            audios: [],
+            audios: []
         };
     }
 
@@ -38,11 +38,12 @@ class RecordSong extends React.Component {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         // show it to user
         this.audio.srcObject = stream;
-        this.audio.play();
+        // this.audio.play();
         // init recording
         this.mediaRecorder = new MediaRecorder(stream);
         // init data storage for video chunks
         this.chunks = [];
+        this.bgAudio = new Audio('http://localhost:8000/midi/suas_leis.mp3');
         // listen for data from media recorder
         this.mediaRecorder.ondataavailable = e => {
             if (e.data && e.data.size > 0) {
@@ -53,6 +54,7 @@ class RecordSong extends React.Component {
 
     startRecording(e) {
         e.preventDefault();
+        this.bgAudio.play();
         // wipe old data chunks
         this.chunks = [];
         // start recorder with 10ms buffer
@@ -63,6 +65,7 @@ class RecordSong extends React.Component {
 
     stopRecording(e) {
         e.preventDefault();
+        this.bgAudio.pause();
         // stop the recorder
         this.mediaRecorder.stop();
         // say that we're not recording
@@ -77,16 +80,22 @@ class RecordSong extends React.Component {
         // generate video url from blob
         const audioURL = window.URL.createObjectURL(blob);
         // append videoURL to list of saved videos for rendering
-        const audios = this.state.audios.concat([audioURL]);
+        const audios = this.state.audios.concat([{ url: audioURL, blob: blob }]);
         this.setState({ audios });
+        console.log(audios);
     }
-    uploadAudio(audioURL) {
-
-        axios.post(`http://localhost:8000/upload`, { files: { recording: audioURL }, songID: "morag", uid: "adam", partID: "alto" })
-            .then(res => {
-                console.log(res);
-                console.log(res.data);
-            })
+    uploadAudio(audio) {
+        console.log(`Blob is: - ${audio}`);
+        var formData = new FormData();
+        formData.append("recording", audio);
+        formData.append("songID", "morag");
+        formData.append("uid", "adam");
+        formData.append("partID", "alto");
+        axios.post('http://localhost:8000/upload', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
 
     }
     deleteAudio(audioURL) {
@@ -115,14 +124,14 @@ class RecordSong extends React.Component {
                 </div>
                 <div>
                     <h3>Recorded audios:</h3>
-                    {audios.map((audioURL, i) => (
+                    {audios.map((audio, i) => (
                         <div key={`audio_${i}`}>
-                            <audio controls style={{ width: 200 }} src={audioURL} />
+                            <audio controls style={{ width: 200 }} src={audio.url} />
                             <div>
-                                <button onClick={() => this.deleteAudio(audioURL)}>Delete</button>
+                                <button onClick={() => this.deleteAudio(audio)}>Delete</button>
                             </div>
                             <div>
-                                <button onClick={() => this.uploadAudio(audioURL)}>Upload</button>
+                                <button onClick={() => this.uploadAudio(audio.blob)}>Upload</button>
                             </div>
                         </div>
                     ))}
