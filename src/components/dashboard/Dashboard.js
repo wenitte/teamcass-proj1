@@ -35,6 +35,9 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary
+  },
+  heading: {
+    marginBottom: theme.spacing(10)
   }
 }));
 
@@ -97,10 +100,23 @@ export default function Dashboard(props) {
         <CssBaseline />
         <Container maxWidth="lg">
           <div className={classes.root}>
+            <Typography className={classes.heading} variant="h1">Hello, {props.user}</Typography>
             <Grid container spacing={3}>
+              <Grid container justify="center" spacing={5}>
+                <Grid item>
+                  <Button variant="contained" color="primary" size="large">
+                    Mix!
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button variant="contained" color="primary" size="large">
+                    Create!
+                  </Button>
+                </Grid>
+              </Grid>
               <Grid item sm={6}>
                 <Paper className={classes.paper}>
-                  <Typography variant="h1" gutterBottom>
+                  <Typography variant="h3" gutterBottom>
                     Recent Recordings
                   </Typography>
                   <Grid item>
@@ -111,7 +127,6 @@ export default function Dashboard(props) {
                 </Paper>
               </Grid>
               <Grid item sm={6} style={{ paddingTop: theme.spacing(15) }}>
-                <Typography variant="h2">{props.user}</Typography>
                 <form className={classes.form} noValidate autoComplete="off">
                   <TextField
                     id="name"
