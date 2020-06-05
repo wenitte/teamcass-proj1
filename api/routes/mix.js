@@ -5,10 +5,11 @@ const { exec } = require("child_process");
 router.post('/', function (req, res, next) {
 
     let recordings = req.body.recordings;
+    let songID = req.body.songID;
     let paths = [];
     for (let i = 0; i < recordings.length; i++) {
         let rec = recordings[i];
-        paths.push(`public/recordings/${rec.songID}/${rec.partID}/${rec.uid}-${rec.songID}-${rec.partID}.mp3`);
+        paths.push(`public/recordings/${songID}/${rec.partID}/${rec.uid}-${songID}-${rec.partID}.mp3`);
     }
     console.log(paths);
     // Send a request to /mix/{the song title from the record song page}
@@ -33,16 +34,15 @@ router.post('/', function (req, res, next) {
     }
 
 
-    let title = req.body.recordings[0].songID;
     let currentTime = Date.now();
-    let mixedFile = `${title}-${currentTime}-mixed.mp3`;
+    let mixedFile = `${songID}-${currentTime}-mixed.mp3`;
     const mixCmd = exec(`
     set - e &&
     cd public/recordings/tmp/ &&
-    sox -m *.mp3 ${title}-${currentTime}-mixed.mp3 &&
+    sox -m *.mp3 ${songID}-${currentTime}-mixed.mp3 &&
     mv  ${mixedFile} ../mixed/ &&
     rm * &&
-    echo ${ title} - mixed.mp3 has been created.
+    echo ${songID} - mixed.mp3 has been created.
     `, (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);

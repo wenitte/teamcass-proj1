@@ -62,7 +62,7 @@ function App({ currentUser, checkUserSession }) {
             <Route
               path="/record-song"
               render={() =>
-                currentUser ? <RecordSong /> : <Redirect to="/" />
+                <RecordSong />
               }
             />
           </Switch>
