@@ -27,9 +27,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ChooseSong = () => {
+const ChooseSong = ( { history } ) => {
   const classes = useStyles();
-  const [song, setSong] = useState("");
+  const [song, setSong] = useState({
+    id: null,
+    title: null,
+  });
   const [state, setState] = useState({
     loading: true,
     data: null,
@@ -46,8 +49,10 @@ const ChooseSong = () => {
 
   const { loading, data } = state;
 
-  const handleChange = event => {
-    setSong(event.target.value);
+  const handleChange = (event) => {
+    const { value } = event.target;
+    const [id, title] = value.split("&&");
+    setSong({ ...song, id, title });
   };
 
   return loading ? (<h1>Loading...</h1>) : (
@@ -56,12 +61,16 @@ const ChooseSong = () => {
       <div className={classes.paper}>
         <Typography variant="h3">Choose your song</Typography>
         <FormControl className={classes.formControl}>
-          <Select label="" value={song} onChange={handleChange}>
+          <Select
+            label=""
+            value={song.id + "&&" + song.title}
+            onChange={handleChange}
+          >
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
             {data.map((song) => (
-              <MenuItem key={song.id} value={song.id}>
+              <MenuItem key={song.id} value={song.id + "&&" + song.title}>
                 {song.title}
               </MenuItem>
             ))}
@@ -70,7 +79,17 @@ const ChooseSong = () => {
       </div>
 
       <Link to={{ pathname: '/record-song', state: { song: song } }}>
-        <Button variant="contained" color="primary" size="large">
+      <Button
+        variant="contained"
+        color="primary"
+        size="large"
+        disabled={song.id ? false : true}
+        onClick={() => {
+          history.push("/record-song", {
+            ...song,
+          });
+        }}
+      >
           Let's go
         </Button>
       </Link>
