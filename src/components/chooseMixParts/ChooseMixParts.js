@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles } from "@material-ui/core/styles";
@@ -27,7 +27,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ChooseMixParts() {
+const ChooseMixParts = ({ location }) => {
+  const { state } = location;
   const classes = useStyles();
   const [song, setSong] = React.useState("");
 
@@ -38,9 +39,9 @@ export default function ChooseMixParts() {
   return (
     <Container>
       <CssBaseline />
-      {/* <div className={classes.paper}>
-        <Typography variant="h3">Song Title</Typography>
-      </div> */}
+      <div className={classes.paper}>
+        <Typography variant="h3">{state.title}</Typography>
+      </div>
       <Grid container spacing={3} className={classes.paddingTopBottom}>
         <Grid item xs={3}>
           <Typography>Soprano</Typography>
@@ -102,4 +103,6 @@ export default function ChooseMixParts() {
       </Link>
     </Container>
   );
-}
+};
+
+export default withRouter(ChooseMixParts);
