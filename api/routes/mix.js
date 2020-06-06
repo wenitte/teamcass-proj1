@@ -6,6 +6,8 @@ router.post('/', function (req, res, next) {
 
     let recordings = req.body.recordings;
     let songID = req.body.songID;
+    let user = req.body.mixer;
+    console.log(user);
     let paths = [];
     for (let i = 0; i < recordings.length; i++) {
         let rec = recordings[i];
@@ -35,13 +37,19 @@ router.post('/', function (req, res, next) {
 
 
     let currentTime = Date.now();
-    let mixedFile = `${songID}-${currentTime}-mixed.mp3`;
+    let mixedFile = `${songID}-${currentTime}-${user}.mp3`;
     const mixCmd = exec(`
     set - e &&
     cd ./public/recordings/tmp/ &&
-    sox -m *.mp3 ${songID}-${currentTime}-mixed.mp3 &&
-    mv  ${mixedFile} ../mixed/ &&
-    rm * && cd ../../../ &&
+    sox -m *.mp3 ${songID}-${currentTime}-${user}.mp3 &&
+    DIR="../mixed/${user}"
+    if [ -d "$DIR" ]; then
+     mv  ${mixedFile} ../mixed/${user}
+    else
+     mkdir ../mixed/${user} && mv ${mixedFile} ../mixed/${user}
+    fi
+    
+    rm * && cd ../../../ && 
     echo ${songID} - mixed.mp3 has been created.
     `, (error, stdout, stderr) => {
         if (error) {
@@ -57,7 +65,7 @@ router.post('/', function (req, res, next) {
     mixCmd.on('exit', function (code) {
         console.log('Child process exited with exit code ' + code);
     });
-    res.json({ "url": `/recordings/mixed/${mixedFile}` });
+    res.json({ "url": `/recordings/mixed/${user}/${mixedFile}` });
 });
 
 module.exports = router;
