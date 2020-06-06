@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
@@ -9,23 +8,9 @@ import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-const audioType = "audio/wav";
 
-// const useStyles = makeStyles(theme => ({
-//   paper: {
-//     marginTop: theme.spacing(8),
-//     display: "flex",
-//     flexDirection: "column",
-//     alignItems: "center"
-//   },
-//   formControl: {
-//     margin: theme.spacing(1),
-//     minWidth: 200
-//   },
-//   selectEmpty: {
-//     marginTop: theme.spacing(2)
-//   }
-// }));
+
+const audioType = "audio/wav";
 
 class RecordSong extends React.Component {
   constructor(props) {
@@ -88,7 +73,7 @@ class RecordSong extends React.Component {
     this.setState({ audios });
     console.log(audios);
   }
-  uploadAudio(audio) {
+  uploadAudio = (audio) => {
     console.log(`Blob is: - ${audio}`);
     var formData = new FormData();
     formData.append("recording", audio);
@@ -100,17 +85,11 @@ class RecordSong extends React.Component {
         "Content-Type": "multipart/form-data"
       }
     });
-    // .then(() => {
-    //   this.props.history.push('/clip-saved');
-    // });
   }
   deleteAudio(audioURL) {
     // filter out current videoURL from the list of saved videos
     const audios = this.state.audios.filter(a => a !== audioURL);
     this.setState({ audios });
-  }
-  updatePart(part) {
-    this.setState({ part });
   }
   updatePart(event) {
     this.setState({ part: event.target.value });
@@ -168,7 +147,7 @@ class RecordSong extends React.Component {
                 </Button>
               </Link> */}
               <div>
-                <h3>Recorded audios:</h3>
+                <h3>Draft Recordings</h3>
                 {audios.map((audio, i) => (
                   <div key={`audio_${i}`}>
                     <audio controls style={{ width: 200 }} src={audio.url} />
