@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, withRouter } from "react-router-dom";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -9,6 +9,8 @@ import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
+
+import { getPartRecordings } from "../../utils/query";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -28,25 +30,46 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ChooseMixParts = ({ location }) => {
-  const { state } = location;
   const classes = useStyles();
-  const [song, setSong] = React.useState("");
+  const [state, setState] = React.useState({
+    soprano: null,
+    tenor: null,
+    alto: null,
+    bass: null,
+    loading: true,
+  });
+
+  useEffect(() => {
+    const getRecordings = async (song, part) => {
+      const { data } = await getPartRecordings(song, part);
+      const names = data.recordings.map((item) => item.uid);
+      setState((state) => ({ ...state, [part]: names }));
+    };
+    getRecordings(location.state.id, "soprano");
+    getRecordings(location.state.id, "tenor");
+    getRecordings(location.state.id, "alto");
+    getRecordings(location.state.id, "bass");
+    setState((state) => ({ ...state, loading: false }));
+  }, [location.state.id]);
 
   const handleChange = (event) => {
-    setSong(event.target.value);
+    console.log(event.target);
+    // setSong(event.target.value);
   };
-
-  return (
+  const { soprano, tenor, alto, bass, loading } = state;
+  return loading ? (
+    <h1>Loading...</h1>
+  ) : (
     <Container>
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography variant="h3">{state.title}</Typography>
+        <Typography variant="h3">{location.state.title}</Typography>
       </div>
       <Grid container spacing={3} className={classes.paddingTopBottom}>
         <Grid item xs={3}>
           <Typography>Soprano</Typography>
           <FormControl className={classes.formControl}>
-            <Select label="" value={song} onChange={handleChange}>
+            <Select label="" value={soprano} onChange={handleChange}>
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
@@ -59,7 +82,7 @@ const ChooseMixParts = ({ location }) => {
         <Grid item xs={3}>
           <Typography>Tenor</Typography>
           <FormControl className={classes.formControl}>
-            <Select label="" value={song} onChange={handleChange}>
+            <Select label="" value={tenor} onChange={handleChange}>
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
@@ -72,7 +95,7 @@ const ChooseMixParts = ({ location }) => {
         <Grid item xs={3}>
           <Typography>Alto</Typography>
           <FormControl className={classes.formControl}>
-            <Select label="" value={song} onChange={handleChange}>
+            <Select label="" value={alto} onChange={handleChange}>
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
@@ -85,7 +108,7 @@ const ChooseMixParts = ({ location }) => {
         <Grid item xs={3}>
           <Typography>Bass</Typography>
           <FormControl className={classes.formControl}>
-            <Select label="" value={song} onChange={handleChange}>
+            <Select label="" value={bass} onChange={handleChange}>
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
