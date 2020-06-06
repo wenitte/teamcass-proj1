@@ -6,3 +6,10 @@ export const getAllSongs = () => {
     method: "get",
   });
 };
+
+export const getPartRecordings = (song, part) => {
+  return axios({
+    url: `/get-recording/${song}/${part}`,
+    method: "get",
+  });
+};
