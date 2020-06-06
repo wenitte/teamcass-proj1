@@ -4,31 +4,28 @@ import axios from "axios";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core";
-import AudioPlayer from "material-ui-audio-player";
 const audioType = "audio/wav";
 
-const useStyles = makeStyles(theme => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center"
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 200
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2)
-  }
-}));
+// const useStyles = makeStyles(theme => ({
+//   paper: {
+//     marginTop: theme.spacing(8),
+//     display: "flex",
+//     flexDirection: "column",
+//     alignItems: "center"
+//   },
+//   formControl: {
+//     margin: theme.spacing(1),
+//     minWidth: 200
+//   },
+//   selectEmpty: {
+//     marginTop: theme.spacing(2)
+//   }
+// }));
 
 class RecordSong extends React.Component {
   constructor(props) {
