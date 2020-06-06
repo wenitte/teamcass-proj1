@@ -68,13 +68,13 @@ const ChooseSong = () => {
           </Select>
         </FormControl>
       </div>
-      
-      <Link to="/record-song">
+
+      <Link to={{ pathname: '/record-song', state: { song: song } }}>
         <Button variant="contained" color="primary" size="large">
           Let's go
         </Button>
       </Link>
-      
+
     </Container>
   );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { withRouter } from 'react-router-dom';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
@@ -12,7 +13,7 @@ import Select from "@material-ui/core/Select";
 
 const audioType = "audio/wav";
 
-class RecordSong extends React.Component {
+class RecSong extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,7 +33,8 @@ class RecordSong extends React.Component {
     this.mediaRecorder = new MediaRecorder(stream);
     // init data storage for video chunks
     this.chunks = [];
-    this.bgAudio = new Audio("http://localhost:8000/midi/suas_leis.mp3");
+    this.bgAudio = new Audio(`http://localhost:8000/midi/${this.props.location.state.song}.mp3`);
+    this.bgAudio.load();
     // listen for data from media recorder
     this.mediaRecorder.ondataavailable = e => {
       if (e.data && e.data.size > 0) {
@@ -73,11 +75,11 @@ class RecordSong extends React.Component {
     this.setState({ audios });
     console.log(audios);
   }
-  uploadAudio = (audio) => {
+  uploadAudio = (audio, song) => {
     console.log(`Blob is: - ${audio}`);
     var formData = new FormData();
     formData.append("recording", audio);
-    formData.append("songID", "uibhist_mo_ghraidh");
+    formData.append("songID", song);
     formData.append("uid", "adam");
     formData.append("partID", this.state.part);
     axios.post("http://localhost:8000/upload", formData, {
@@ -85,6 +87,10 @@ class RecordSong extends React.Component {
         "Content-Type": "multipart/form-data"
       }
     });
+    this.props.history.push('/clip-saved', {
+      // Link to /details and pass in detailsObject as a prop, which contains item
+
+    })
   }
   deleteAudio(audioURL) {
     // filter out current videoURL from the list of saved videos
@@ -96,8 +102,10 @@ class RecordSong extends React.Component {
   }
 
   render() {
-    const { recording, audios, part } = this.state;
 
+    const { match, location, history } = this.props;
+    const { recording, audios, part } = this.state;
+    const { song } = this.props.location.state;
     return (
       <Container>
         <CssBaseline />
@@ -120,6 +128,7 @@ class RecordSong extends React.Component {
 
           <Grid item sm={6}>
             <Typography variant="h3">Record {part.charAt(0).toUpperCase() + part.slice(1)} Part</Typography>
+            <Typography variant="h4">{song.title}</Typography>
             <div >
               <audio
                 style={{ width: 400 }}
@@ -155,7 +164,7 @@ class RecordSong extends React.Component {
                       <Button variant="contained" color="primary" onClick={() => this.deleteAudio(audio)}>Delete</Button>
                     </div>
                     <div>
-                      <Button variant="contained" color="primary" style={{ marginTop: "2rem" }} onClick={() => this.uploadAudio(audio.blob)}>Upload</Button>
+                      <Button variant="contained" color="primary" style={{ marginTop: "2rem" }} onClick={() => this.uploadAudio(audio.blob, song)}>Upload</Button>
                     </div>
                   </div>
                 ))}
@@ -167,4 +176,7 @@ class RecordSong extends React.Component {
     );
   }
 }
+const RecordSong = withRouter(RecSong);
 export default RecordSong;
+
+
